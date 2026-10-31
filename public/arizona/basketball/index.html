@@ -103,7 +103,8 @@ section { margin-bottom: 26px; }
 .phead[aria-expanded="true"] .caret { transform: rotate(90deg); color: var(--gold); }
 .pid { flex: 1 1 auto; min-width: 0; }
 .pnm { font-weight: 600; font-size: 15px; color: #fff; letter-spacing: -.01em; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-.pclub { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); text-transform: uppercase; letter-spacing: .05em; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* display:block matters — ellipsis does not apply to an inline element */
+.pclub { display: block; font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); text-transform: uppercase; letter-spacing: .05em; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pnums { display: flex; gap: 14px; flex: none; }
 .stat { text-align: right; min-width: 32px; }
 .stat b { font-family: var(--mono); font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums; color: var(--ink); display: block; line-height: 1.1; }
@@ -222,9 +223,20 @@ footer ul { margin: 0 0 10px; padding-left: 18px; }
 footer li { margin-bottom: 4px; }
 
 @media (max-width: 560px) {
-  .pnums { gap: 10px; }
-  .stat b { font-size: 13.5px; }
-  .stat { min-width: 26px; }
+  /* On a phone the name, the fixture and four stats cannot share one line.
+     Give the stats their own row so nothing has to truncate. */
+  .phead { flex-wrap: wrap; align-items: flex-start; padding: 11px 8px; }
+  .caret { margin-top: 3px; }
+  .pid { flex: 1 1 100%; }
+  .pnums {
+    flex: 1 1 100%;
+    justify-content: flex-start;
+    gap: 22px;
+    margin: 7px 0 0 23px;   /* clears the caret so it lines up with the name */
+  }
+  .stat { text-align: left; min-width: 0; }
+  .stat b { font-size: 14px; }
+  .pclub { white-space: normal; overflow: visible; }
   .pbody { padding-left: 10px; }
   .board-b { padding: 0 8px 6px; }
 }
