@@ -1,0 +1,14 @@
+{
+  // Static site served by Cloudflare Workers Static Assets.
+  // The Workers project's deploy command (`npx wrangler deploy`) reads this file.
+  "name": "alumwatch",
+  "compatibility_date": "2025-11-01",
+
+  "assets": {
+    // Everything under public/ is uploaded and served as-is.
+    // A request for /arizona/basketball/ resolves to
+    // public/arizona/basketball/index.html automatically.
+    "directory": "./public",
+    "not_found_handling": "404-page"
+  }
+}
