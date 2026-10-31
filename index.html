@@ -3,927 +3,138 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Every former Arizona Wildcat playing pro basketball — NBA, G League and overseas. Recent games, season averages and full careers, updated daily.">
+<title>AlumWatch</title>
+<meta name="description" content="Follow the players from your school who went pro. Every former player, every league, updated daily.">
 <meta name="theme-color" content="#070E1D">
-<link rel="canonical" href="https://www.alumwatch.com/arizona/basketball">
+<link rel="canonical" href="https://www.alumwatch.com/">
 
-<!-- what shows when the link is pasted into a text or a group chat -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Wildcat Watch — former Arizona Wildcats in the pros">
-<meta property="og:description" content="Every former Arizona Wildcat playing pro basketball — NBA, G League and overseas. Recent games, season averages and full careers, updated daily.">
-<meta property="og:url" content="https://www.alumwatch.com/arizona/basketball">
+<meta property="og:title" content="AlumWatch — follow your school's players in the pros">
+<meta property="og:description" content="Every former player from your school, across every league, updated daily.">
+<meta property="og:url" content="https://www.alumwatch.com/">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Wildcat Watch — former Arizona Wildcats in the pros">
-<meta name="twitter:description" content="Every former Arizona Wildcat playing pro basketball — NBA, G League and overseas. Recent games, season averages and full careers, updated daily.">
+<meta name="twitter:title" content="AlumWatch — follow your school's players in the pros">
+<meta name="twitter:description" content="Every former player from your school, across every league, updated daily.">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%230C234B%22/%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%228%22 fill=%22none%22 stroke=%22%23E8384F%22 stroke-width=%222%22/%3E%3Cpath d=%22M16 8v16M8 16h16%22 stroke=%22%23E8384F%22 stroke-width=%222%22/%3E%3C/svg%3E">
 
-<title>Wildcat Watch</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
 <style>
-/* Layout: dark Arizona-navy scoreboard — recent-games board on top, league tables below, rows expand to form + career */
 :root {
   --ground: #070E1D;
   --panel: #0E1A30;
   --panel-2: #132340;
   --line: #1D2F4F;
-  --line-soft: #19283F;
   --ink: #EAEFF8;
   --ink-2: #93A3BE;
   --ink-3: #5E6F8C;
   --cardinal: #E8384F;
-  --cardinal-dim: #8C2233;
   --gold: #F2C14E;
   --green: #45C98A;
-  --green-bg: #103A2A;
-  --cool: #3D4D6B;
   --sans: "Archivo", system-ui, -apple-system, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   color-scheme: dark;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
-
-body { background: var(--ground); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.45; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--ground); color: var(--ink);
+  font-family: var(--sans); font-size: 15px; line-height: 1.5;
+  min-height: 100vh; display: flex; flex-direction: column;
+}
+img { max-width: 100%; }
 .wrap {
-  max-width: 920px; margin: 0 auto;
+  max-width: 760px; width: 100%; margin: 0 auto;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 22px 60px;
+  padding-block: 56px 48px;
+  flex: 1 0 auto;
 }
-
-/* ---- masthead ---- */
-.mast { border-bottom: 2px solid var(--cardinal); padding-bottom: 12px; }
-.mast-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-h1 { font-weight: 800; font-size: clamp(26px, 6.4vw, 38px); margin: 0; letter-spacing: -.028em; color: #fff; text-wrap: balance; }
-.stamp { font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; color: var(--cardinal); margin-left: auto; white-space: nowrap; }
-.sub { color: var(--ink-2); font-size: 13.5px; margin: 6px 0 0; max-width: 64ch; }
-.rail {
-  display: flex; flex-wrap: wrap; gap: 4px 16px;
-  font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin: 11px 0 0;
+.brand {
+  font-family: var(--mono); font-size: 11px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--cardinal); font-weight: 600;
 }
-.rail b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; margin-right: 4px; }
-
-/* ---- recent board ---- */
-.board { border: 1px solid var(--green-bg); border-radius: 6px; overflow: hidden; margin: 20px 0 6px; }
-.board-h { background: var(--green-bg); padding: 9px 13px; display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
-.board-h strong { font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--green); font-weight: 600; }
-.board-h em { font-style: normal; font-family: var(--mono); font-size: 9.5px; color: var(--ink-3); margin-left: auto; letter-spacing: .08em; }
-.board-b { background: var(--panel-2); padding: 0 13px 6px; }
-.board-b .prow { border-bottom-color: #1A2B45; }
-.board-b .phead:hover { background: #17294A; }
-.board-empty { padding: 12px 13px; font-size: 13px; color: var(--ink-2); background: var(--panel-2); }
-
-/* ---- filters ---- */
-.controls { display: flex; flex-wrap: wrap; gap: 7px; margin: 20px 0 8px; }
-.chip {
-  font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500;
-  padding: 7px 12px; border-radius: 4px; border: 1px solid var(--line);
-  background: var(--panel); color: var(--ink-2); cursor: pointer; transition: all .12s;
+h1 {
+  font-weight: 800; font-size: clamp(32px, 8vw, 52px); margin: 10px 0 14px;
+  letter-spacing: -.03em; color: #fff; text-wrap: balance; line-height: 1.05;
 }
-.chip:hover { border-color: var(--cardinal-dim); color: var(--ink); }
-.chip[aria-pressed="true"] { background: var(--cardinal); border-color: var(--cardinal); color: #fff; }
-.chip:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-.showing { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin: 0 0 22px; }
+.lede { color: var(--ink-2); font-size: 16px; max-width: 54ch; margin: 0 0 8px; }
+.sub { color: var(--ink-3); font-size: 13.5px; max-width: 56ch; margin: 0; }
 
-/* ---- sections ---- */
-section { margin-bottom: 26px; }
-.sechead { display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--line); padding-bottom: 6px; margin-bottom: 1px; }
-.sechead h2 { font-family: var(--mono); font-weight: 600; font-size: 11.5px; letter-spacing: .17em; text-transform: uppercase; margin: 0; color: var(--gold); }
-.sechead .n { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); margin-left: auto; }
-.secnote { font-size: 12px; color: var(--ink-3); margin: 8px 0 6px; max-width: 66ch; }
-
-/* ---- player rows ---- */
-.prow { border-bottom: 1px solid var(--line-soft); }
-.phead {
-  display: flex; align-items: center; gap: 12px; padding: 10px 8px; width: 100%; text-align: left;
-  background: none; border: 0; color: inherit; font: inherit; cursor: pointer;
+.schools {
+  margin-top: 40px; display: grid; gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
 }
-.phead:hover { background: var(--panel); }
-.phead:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
-.caret { font-family: var(--mono); font-size: 10px; color: var(--ink-3); flex: none; width: 11px; transition: transform .15s; }
-.phead[aria-expanded="true"] .caret { transform: rotate(90deg); color: var(--gold); }
-.pid { flex: 1 1 auto; min-width: 0; }
-.pnm { font-weight: 600; font-size: 15px; color: #fff; letter-spacing: -.01em; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-.pclub { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); text-transform: uppercase; letter-spacing: .05em; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.pnums { display: flex; gap: 14px; flex: none; }
-.stat { text-align: right; min-width: 32px; }
-.stat b { font-family: var(--mono); font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums; color: var(--ink); display: block; line-height: 1.1; }
-.stat i { font-style: normal; font-family: var(--mono); font-size: 8px; letter-spacing: .11em; color: var(--ink-3); display: block; margin-top: 2px; }
-.prow.quiet .pnm { color: var(--ink-2); }
-.prow.quiet .stat b { color: var(--ink-3); }
-
-.tag { font-family: var(--mono); font-size: 8.5px; letter-spacing: .1em; text-transform: uppercase; padding: 2px 5px; border-radius: 3px; font-weight: 500; }
-.t-tw { background: #16263F; color: #8FB4EC; }
-.t-unc { background: #1C1A24; color: var(--ink-3); border: 1px dashed var(--line); }
-.t-hot { background: var(--green-bg); color: var(--green); }
-
-/* ---- expansion ---- */
-.pbody { padding: 2px 8px 18px 31px; }
-.boxline { background: var(--panel); border: 1px solid var(--line); border-radius: 5px; padding: 11px 13px; margin-bottom: 12px; }
-.bl-h { font-family: var(--mono); font-size: 9.5px; letter-spacing: .13em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 8px; }
-.bl-grid { display: flex; flex-wrap: wrap; gap: 14px 20px; }
-.bl-grid div { min-width: 0; }
-.bl-grid b { font-family: var(--mono); font-weight: 700; font-size: 16px; font-variant-numeric: tabular-nums; display: block; line-height: 1; }
-.bl-grid i { font-style: normal; font-family: var(--mono); font-size: 8.5px; letter-spacing: .11em; color: var(--ink-3); display: block; margin-top: 4px; }
-.note { font-size: 12.5px; color: var(--ink-2); margin: 0 0 12px; max-width: 66ch; }
-
-/* ---- read block ---- */
-.read {
-  background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--gold);
-  border-radius: 5px; padding: 11px 13px; margin-bottom: 12px;
+.school {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 7px;
+  padding: 16px 18px; text-decoration: none; color: inherit;
+  border-left: 3px solid var(--cardinal); transition: border-color .13s, background .13s;
 }
-.read-h {
-  font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 6px; display: flex; align-items: center; gap: 7px;
-}
-.read-h .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex: none; }
-.read p { margin: 0; font-size: 13px; color: var(--ink); max-width: 66ch; line-height: 1.5; }
-.read .ualine {
+.school:hover { background: var(--panel-2); border-left-color: var(--gold); }
+.school:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.school .nm { font-weight: 700; font-size: 17px; letter-spacing: -.015em; color: #fff; }
+.school .meta {
   font-family: var(--mono); font-size: 10.5px; color: var(--ink-3);
-  margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line-soft);
+  text-transform: uppercase; letter-spacing: .08em; margin-top: 3px;
+}
+.school .go { margin-left: auto; color: var(--ink-3); font-family: var(--mono); font-size: 14px; }
+.school:hover .go { color: var(--gold); }
+
+.soon {
+  margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line);
+}
+.soon h2 {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--gold); margin: 0 0 10px;
+}
+.soon p { color: var(--ink-3); font-size: 13.5px; margin: 0 0 10px; max-width: 60ch; }
+.soon .list {
+  font-family: var(--mono); font-size: 12px; color: var(--ink-3);
+  display: flex; flex-wrap: wrap; gap: 6px 14px;
 }
 
-/* ---- board dividers ---- */
-.bdiv {
-  display: flex; align-items: center; gap: 9px;
-  font-family: var(--mono); font-size: 9.5px; letter-spacing: .15em; text-transform: uppercase;
-  color: var(--ink-3); padding: 13px 0 5px;
+footer {
+  flex: none;
+  border-top: 1px solid var(--line);
+  padding-block: 18px 26px;
+  font-family: var(--mono); font-size: 10.5px; color: var(--ink-3);
+  letter-spacing: .06em;
 }
-.bdiv:first-child { padding-top: 6px; }
-.bdiv::after { content: ""; flex: 1 1 auto; height: 1px; background: var(--line); }
-.bdiv b { color: var(--gold); font-weight: 600; }
-
-/* ---- form chart ---- */
-.form { background: var(--panel); border: 1px solid var(--line); border-radius: 5px; padding: 11px 13px; margin-bottom: 12px; }
-.form-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
-.form-top .bl-h { margin: 0; }
-.statbtns { display: flex; gap: 4px; margin-left: auto; }
-.statbtn {
-  font-family: var(--mono); font-size: 9.5px; letter-spacing: .1em; font-weight: 600;
-  padding: 5px 9px; border-radius: 3px; cursor: pointer;
-  border: 1px solid var(--line); background: var(--panel-2); color: var(--ink-2);
-  transition: all .12s;
-}
-.statbtn:hover { border-color: var(--gold); color: var(--ink); }
-.statbtn[aria-pressed="true"] { background: var(--gold); border-color: var(--gold); color: #10182A; }
-.statbtn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-.chart { position: relative; display: flex; align-items: flex-end; gap: 5px; height: 92px; }
-.bar { flex: 1 1 0; min-width: 9px; max-width: 34px; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; }
-.bar span { display: block; width: 100%; background: var(--cool); border-radius: 2px 2px 0 0; }
-.bar em {
-  font-style: normal; font-family: var(--mono); font-size: 9px; font-weight: 600;
-  color: var(--ink-2); text-align: center; margin-bottom: 3px; font-variant-numeric: tabular-nums;
-}
-.bar.hi span { background: var(--green); }
-.bar.hi em { color: var(--green); }
-.bar.zero span { background: #1B2740; min-height: 2px; }
-.bar.zero em { color: var(--ink-3); }
-.avgline { position: absolute; left: 0; right: 0; border-top: 1px dashed var(--gold); opacity: .55; pointer-events: none; }
-.xaxis { display: flex; gap: 5px; margin-top: 5px; }
-.xaxis div { flex: 1 1 0; min-width: 9px; max-width: 34px; font-family: var(--mono); font-size: 8px; color: var(--ink-3); text-align: center; overflow: hidden; }
-.legend { font-family: var(--mono); font-size: 9.5px; color: var(--ink-3); margin-top: 9px; letter-spacing: .04em; }
-.legend b { color: var(--gold); font-weight: 500; }
-.legend em { font-style: normal; color: var(--green); }
-.chartnote {
-  font-size: 11.5px; color: var(--gold); margin: 0 0 10px; max-width: 64ch;
-  border-left: 2px solid #4A3C18; padding-left: 9px; opacity: .9;
-}
-
-/* ---- career toggle ---- */
-.careerbtn {
-  display: flex; align-items: center; gap: 8px; width: 100%; text-align: left;
-  font-family: var(--mono); font-size: 9.5px; letter-spacing: .13em; text-transform: uppercase;
-  color: var(--ink-2); background: var(--panel); border: 1px solid var(--line);
-  border-radius: 5px; padding: 9px 12px; cursor: pointer; font-weight: 500; transition: all .12s;
-}
-.careerbtn:hover { border-color: var(--gold); color: var(--ink); }
-.careerbtn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-.careerbtn .cc { font-size: 10px; color: var(--ink-3); transition: transform .15s; }
-.careerbtn[aria-expanded="true"] .cc { transform: rotate(90deg); color: var(--gold); }
-.careerbtn .cn { margin-left: auto; color: var(--ink-3); letter-spacing: .05em; }
-.careerwrap { margin-top: 9px; }
-
-/* ---- career table ---- */
-.career-h { font-family: var(--mono); font-size: 9.5px; letter-spacing: .13em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 7px; }
-.tscroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 5px; }
-table { border-collapse: collapse; width: 100%; min-width: 540px; font-family: var(--mono); font-size: 11.5px; }
-thead th { background: var(--panel-2); color: var(--ink-3); font-weight: 500; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; padding: 7px 9px; text-align: right; white-space: nowrap; }
-thead th:first-child, thead th:nth-child(2), thead th:nth-child(3) { text-align: left; }
-tbody td { padding: 6px 9px; text-align: right; border-top: 1px solid var(--line-soft); font-variant-numeric: tabular-nums; color: var(--ink-2); white-space: nowrap; }
-tbody td:first-child, tbody td:nth-child(2), tbody td:nth-child(3) { text-align: left; }
-tbody td:first-child { color: var(--ink); }
-tbody tr.now td { background: #15243D; color: var(--ink); }
-tbody tr.now td:first-child { color: var(--gold); font-weight: 600; }
-tbody tr.gap td { color: var(--ink-3); font-style: italic; }
-
-footer { margin-top: 34px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--ink-3); }
-footer h3 { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin: 0 0 8px; }
-footer p { margin: 0 0 10px; max-width: 72ch; }
-footer ul { margin: 0 0 10px; padding-left: 18px; }
-footer li { margin-bottom: 4px; }
-
-@media (max-width: 560px) {
-  .pnums { gap: 10px; }
-  .stat b { font-size: 13.5px; }
-  .stat { min-width: 26px; }
-  .pbody { padding-left: 10px; }
-  .board-b { padding: 0 8px 6px; }
-}
-</style>
-<style>
-  /* reset the artifact host normally supplies */
-  :root { color-scheme: dark; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
-  * { box-sizing: border-box; }
-  body { margin: 0; }
-  img { max-width: 100%; }
-  [hidden] { display: none !important; }
+footer .wrap { padding-block: 0; }
 </style>
 </head>
 <body>
+
 <div class="wrap">
+  <div class="brand">AlumWatch</div>
+  <h1>Follow your school's players in the pros.</h1>
+  <p class="lede">Every former player from one program, across every league they scattered to — the NBA, the G League, and the clubs overseas nobody else bothers to track.</p>
+  <p class="sub">Recent games, season averages and full careers. Updated daily.</p>
 
-  <header class="mast">
-    <div class="mast-top">
-      <h1>Wildcat Watch</h1>
-      <span class="stamp">OCT 30 · 2026–27</span>
-    </div>
-    <p class="sub">Every former Arizona Wildcat playing pro basketball. Everyone who finished his college career in Tucson. Tap any player for his form and career.</p>
-    <div class="rail">
-      <span><b>31</b>playing</span>
-      <span><b>13</b>NBA</span>
-      <span><b>5</b>two-way</span>
-      <span><b>13</b>overseas</span>
-    </div>
-  </header>
-
-  <div class="board">
-    <div class="board-h"><strong>Recent games</strong><em id="boardmeta"></em></div>
-    <div class="board-b" id="boardbody"></div>
+  <div class="schools">
+    <a class="school" href="/arizona/basketball/">
+      <div>
+        <div class="nm">Arizona</div>
+        <div class="meta">Men's Basketball · 31 players</div>
+      </div>
+      <span class="go" aria-hidden="true">&#8594;</span>
+    </a>
   </div>
 
-  <div class="controls" role="group" aria-label="Filter">
-    <button class="chip" data-f="all" aria-pressed="true">All</button>
-    <button class="chip" data-f="nba" aria-pressed="false">NBA</button>
-    <button class="chip" data-f="gl" aria-pressed="false">G League</button>
-    <button class="chip" data-f="intl" aria-pressed="false">Overseas</button>
-    <button class="chip" data-f="playing" aria-pressed="false">Has stats</button>
+  <div class="soon">
+    <h2>What's coming</h2>
+    <p>Arizona basketball is the first program here. Football is next, then other schools. If you want yours, say so.</p>
+    <div class="list">
+      <span>Arizona football</span><span>More programs</span><span>Player pages</span>
+    </div>
   </div>
-  <p class="showing" id="showing">All 31 players</p>
-
-  <div id="board"></div>
-
-  <footer>
-    <h3>How the reads are checked</h3>
-    <p>The tables come from sources and are reconciled against each other — every game log here sums to the season average printed beside it. "The read" is different: it is written prose, so every factual claim in it was audited against independent sources on Oct. 30, 2026, and eight were corrected or cut. Claims that rested on four or five games now say so, and a figure nobody could source was removed rather than softened.</p>
-    <p>The errors that got through the first pass are worth knowing about, because they are the kinds that recur: a stale fact that used to be true, a stat belonging to a different Wildcat, and a streak counted one season too long. Anything written here should be re-checked, not carried forward.</p>
-    <h3>How this list is built</h3>
-    <p>A player qualifies only if Arizona was the last college he played for. That keeps the one-and-dones who went straight to the league, and cuts anyone who transferred away to finish somewhere else — Henri Veesaar, Oumar Ballo, Kylan Boswell, Alex Barcello and Emmanuel Akot all played multiple seasons in Tucson but ended their college careers elsewhere.</p>
-    <p>The form chart plots points per game this season, with the gold line at that player's own average. Bars at or above the line are green. It only appears where a real game log exists.</p>
-    <p>Career tables mix leagues deliberately — an NBA row sits next to a Serie A row next to a G League row, because that is what these careers actually look like. Where a season is missing it is marked, not filled in.</p>
-    <h3>Known gaps</h3>
-    <ul>
-      <li>The G League season tips off around Nov. 10, so no two-way player has affiliate numbers yet.</li>
-      <li>Tubelis's nine EuroLeague games and Henderson's three EuroCup games exist only as averages — the official site is still serving last season's game data.</li>
-      <li>Japan, Australia, Poland and Mexico publish little or nothing per game.</li>
-      <li>Absences are derived by comparing each player's log against his team's schedule, so a missed game shows as "did not play" with no reason unless one was confirmed.</li>
-      <li>Minutes in the game logs are whole numbers, so a chart's minutes average can sit a tenth off the published season figure.</li>
-    </ul>
-  </footer>
 </div>
 
-<script>
-/* log rows: [date, opponent, min, pts, reb, ast] */
-var P = [
-{g:"nba",n:"Pelle Larsson",ua:"Arizona 2021–24 · 3 seasons",club:"Miami Heat · NBA",
- s:[["10.6","PTS"],["3.6","REB"],["4.2","AST"]],
- box:[["10.6","PTS"],["3.6","REB"],["4.2","AST"],["30.6","MIN"],["5","GP"],["41.7","FG%"],["35.7","3P%"],["90.0","FT%"]],
- note:"Minutes have climbed each year: 14.2, then 26.4, now 30.6 across five games. Assists are up to 4.2 from 3.4, though his scoring has edged down from 11.4 to 10.6.",
- avg:10.6,
- log:[["Oct 21","vs MIN",24,2,3,4],["Oct 23","vs DET",29,7,2,1],["Oct 24","at CHA",36,15,7,4],["Oct 26","vs DAL",34,12,0,4],["Oct 28","at ATL",31,17,6,8]],
- c:[["2024-25","Miami","NBA",55,"14.2","4.6","1.7","1.2","43.8","33.7","67.2"],
-    ["2024-25","Sioux Falls","G League",1,"38.0","21.0","4.0","3.0","38.9","25.0","66.7"],
-    ["2025-26","Miami","NBA",70,"26.4","11.4","3.5","3.4","49.6","32.3","79.7"],
-    ["2026-27","Miami","NBA",5,"30.6","10.6","3.6","4.2","41.7","35.7","90.0"]]},
+<footer>
+  <div class="wrap">AlumWatch · Updated daily</div>
+</footer>
 
-{g:"nba",n:"Lauri Markkanen",ua:"Arizona 2016–17 · 1 season",club:"Utah Jazz · NBA",
- s:[["16.0","PTS"],["5.5","REB"],["1.8","AST"]],
- box:[["16.0","PTS"],["5.5","REB"],["1.8","AST"],["28.5","MIN"],["4","GP"],["39.6","FG%"],["35.7","3P%"],["88.9","FT%"]],
- note:"Did not play Oct. 28 with a wrist issue. The six-minute line on Oct. 26, after three straight 34-plus-minute games, looks like an early exit — no cause was confirmed.",
- avg:16.0,
- log:[["Oct 21","at MEM",36,18,9,3],["Oct 23","vs NO",34,16,6,3],["Oct 24","vs LAL",38,28,7,1],["Oct 26","vs MEM",6,2,0,0],["Oct 28","vs SA",0,null,null,null]],
- c:[["2014–16","HBA-Märsky","Finland 2nd tier","—","—","—","—","—","—","—","—"],
-    ["2017-18","Chicago","NBA",68,"29.7","15.2","7.5","1.2","43.4","36.2","84.3"],
-    ["2018-19","Chicago","NBA",52,"32.3","18.7","9.0","1.4","43.0","36.1","87.2"],
-    ["2019-20","Chicago","NBA",50,"29.8","14.7","6.3","1.5","42.5","34.4","82.4"],
-    ["2020-21","Chicago","NBA",51,"25.8","13.6","5.3","0.9","48.0","40.2","82.6"],
-    ["2021-22","Cleveland","NBA",61,"30.8","14.8","5.7","1.3","44.5","35.8","86.8"],
-    ["2022-23","Utah","NBA",66,"34.4","25.6","8.6","1.9","49.9","39.2","87.5"],
-    ["2023-24","Utah","NBA",55,"33.1","23.2","8.2","2.0","48.0","39.9","89.9"],
-    ["2024-25","Utah","NBA",47,"31.4","19.0","5.9","1.5","42.3","34.6","87.6"],
-    ["2025-26","Utah","NBA",42,"34.4","26.7","6.9","2.1","47.7","35.5","89.6"],
-    ["2026-27","Utah","NBA",4,"28.5","16.0","5.5","1.8","39.6","35.7","88.9"]],
- gaprow:0},
-
-{g:"nba",n:"Aaron Gordon",ua:"Arizona 2013–14 · 1 season",club:"Denver Nuggets · NBA",
- s:[["12.3","PTS"],["6.5","REB"],["2.5","AST"]],
- box:[["12.3","PTS"],["6.5","REB"],["2.5","AST"],["30.5","MIN"],["4","GP"],["34.2","FG%"],["33.3","3P%"],["81.0","FT%"]],
- note:"Thirteenth NBA season. Opened with 20 against Oklahoma City, went cold for two, then put up his only double-double so far at New Orleans. Denver has played four games.",
- avg:12.3,
- log:[["Oct 22","at OKC",29,20,6,1],["Oct 24","vs NO",37,7,5,4],["Oct 26","vs GS",25,7,4,2],["Oct 28","at NO",31,15,11,3]],
- c:[["2014-15","Orlando","NBA",47,"17.0","5.2","3.6","0.7","44.7","27.1","72.1"],
-    ["2015-16","Orlando","NBA",78,"23.9","9.2","6.5","1.6","47.3","29.6","66.8"],
-    ["2016-17","Orlando","NBA",80,"28.7","12.7","5.1","1.9","45.4","28.8","71.9"],
-    ["2017-18","Orlando","NBA",58,"32.9","17.6","7.9","2.3","43.4","33.6","69.8"],
-    ["2018-19","Orlando","NBA",78,"33.8","16.0","7.4","3.7","44.9","34.9","73.1"],
-    ["2019-20","Orlando","NBA",62,"32.5","14.4","7.7","3.7","43.7","30.8","67.4"],
-    ["2020-21","Orlando","NBA",25,"29.4","14.6","6.6","4.2","43.7","37.5","62.9"],
-    ["2020-21","Denver","NBA",25,"25.9","10.2","4.7","2.2","50.0","26.6","70.5"],
-    ["2021-22","Denver","NBA",75,"31.7","15.0","5.9","2.5","52.0","33.5","74.3"],
-    ["2022-23","Denver","NBA",68,"30.2","16.3","6.6","3.0","56.4","34.7","60.8"],
-    ["2023-24","Denver","NBA",73,"31.5","13.9","6.5","3.5","55.6","29.0","65.8"],
-    ["2024-25","Denver","NBA",51,"28.4","14.7","4.8","3.2","53.1","43.6","81.0"],
-    ["2025-26","Denver","NBA",36,"27.9","16.2","5.8","2.7","49.7","38.9","76.7"],
-    ["2026-27","Denver","NBA",4,"30.5","12.3","6.5","2.5","34.2","33.3","81.0"]]},
-
-{g:"nba",n:"Brandon Williams",ua:"Arizona 2018–19 · 1 season",club:"Golden State Warriors · NBA",
- s:[["11.0","PTS"],["3.0","REB"],["2.6","AST"]],
- box:[["11.0","PTS"],["3.0","REB"],["2.6","AST"],["16.0","MIN"],["5","GP"],["34.1","FG%"],["33.3","3P%"],["83.3","FT%"]],
- note:"Third team he has actually played for, after Portland and Dallas. 2022-23 has no NBA row at all — he spent the whole year in the G League, averaging 19.4 over 28 games for College Park.",
- avg:11.0,
- log:[["Oct 21","at LAL",18,14,4,3],["Oct 23","vs MEM",9,4,2,1],["Oct 24","at PHX",24,20,3,5],["Oct 26","at DEN",15,6,3,3],["Oct 28","at MIN",14,11,3,1]],
- c:[["2021-22","Portland","NBA",24,"26.7","12.9","3.1","3.9","37.2","29.2","70.1"],
-    ["2021-22","Westchester","G Lg · Showcase",10,"31.1","17.7","4.2","5.6","36.4","27.8","83.3"],
-    ["2021-22","Westchester","G League",13,"33.1","22.8","3.9","6.6","46.1","36.0","85.7"],
-    ["2022-23","College Park","G Lg · Showcase",16,"34.0","20.6","3.9","6.2","44.0","34.9","77.6"],
-    ["2022-23","College Park","G League",28,"31.9","19.4","4.2","6.3","46.1","35.2","75.2"],
-    ["2023-24","Dallas","NBA",17,"6.6","3.2","0.8","1.0","37.0","20.0","64.7"],
-    ["2024-25","Dallas","NBA",33,"14.8","8.3","1.8","2.3","52.1","40.0","83.3"],
-    ["2025-26","Dallas","NBA",66,"22.2","13.0","2.9","3.9","47.2","23.2","79.3"],
-    ["2026-27","Golden State","NBA",5,"16.0","11.0","3.0","2.6","34.1","33.3","83.3"]]},
-
-{g:"nba",n:"Brayden Burries",ua:"Arizona 2025–26 · 1 season · No. 10 pick",club:"Milwaukee Bucks · NBA",
- s:[["7.8","PTS"],["3.8","REB"],["1.4","AST"]],
- box:[["7.8","PTS"],["3.8","REB"],["1.4","AST"],["15.0","MIN"],["5","GP"],["44.4","FG%"],["30.8","3P%"],["68.8","FT%"]],
- note:"Rookie season, playing all five Bucks games. Opened with 12 against Washington and has been in double figures three times already.",
- avg:7.8,
- log:[["Oct 21","at WSH",16,12,5,0],["Oct 23","vs CHI",8,3,1,3],["Oct 24","at PHI",17,10,5,2],["Oct 26","vs IND",16,4,2,1],["Oct 28","vs HOU",17,10,6,1]],
- c:[["2026-27","Milwaukee","NBA",5,"15.0","7.8","3.8","1.4","44.4","30.8","68.8"]]},
-
-{g:"nba",n:"Bennedict Mathurin",ua:"Arizona 2020–22 · 2 seasons",club:"New Orleans Pelicans · NBA",
- s:[["7.8","PTS"],["2.6","REB"],["2.0","AST"]],
- box:[["7.8","PTS"],["2.6","REB"],["2.0","AST"],["17.2","MIN"],["5","GP"],["43.8","FG%"],["25.0","3P%"],["87.5","FT%"]],
- note:"Traded to the Clippers in February, then left in free agency for New Orleans in August on a two-year deal. Minutes have roughly halved from the 31.8 he was playing in Indiana last season.",
- avg:7.8,
- log:[["Oct 21","vs IND",18,11,3,2],["Oct 23","at UTA",15,4,2,0],["Oct 24","at DEN",20,9,4,4],["Oct 28","vs DEN",14,5,1,2],["Oct 29","vs SAC",19,10,3,2]],
- c:[["2022-23","Indiana","NBA",78,"28.5","16.7","4.1","1.5","43.4","32.3","82.8"],
-    ["2023-24","Indiana","NBA",59,"26.1","14.5","4.0","2.0","44.6","37.4","82.1"],
-    ["2024-25","Indiana","NBA",72,"29.8","16.1","5.3","1.9","45.8","34.0","83.1"],
-    ["2025-26","Indiana","NBA",28,"31.8","17.8","5.4","2.3","43.3","37.2","88.4"],
-    ["2025-26","LA Clippers","NBA",26,"28.0","17.4","5.5","2.5","42.6","20.7","85.8"],
-    ["2026-27","New Orleans","NBA",5,"17.2","7.8","2.6","2.0","43.8","25.0","87.5"]]},
-
-{g:"nba",n:"Deandre Ayton",ua:"Arizona 2017–18 · 1 season · No. 1 pick",club:"Washington Wizards · NBA",
- s:[["6.2","PTS"],["4.4","REB"],["0.6","AST"]],
- box:[["6.2","PTS"],["4.4","REB"],["0.6","AST"],["13.8","MIN"],["5","GP"],["78.9","FG%"],["—","3P%"],["50.0","FT%"]],
- note:"The steepest fall on this list. He had seven straight double-digit rebounding seasons from 2018-19 through 2024-25, then 8.0 with the Lakers last year, and 4.4 across five games now. Minutes have gone 27.2 to 13.8.",
- avg:6.2,
- log:[["Oct 21","vs MIL",15,11,4,0],["Oct 23","vs TOR",14,4,6,1],["Oct 24","at CHI",16,6,5,0],["Oct 26","at CHA",12,0,4,2],["Oct 28","at CLE",12,10,3,0]],
- c:[["2018-19","Phoenix","NBA",71,"30.7","16.3","10.3","1.8","58.5","0.0","74.6"],
-    ["2019-20","Phoenix","NBA",38,"32.5","18.2","11.5","1.9","54.6","23.1","75.3"],
-    ["2020-21","Phoenix","NBA",69,"30.7","14.4","10.5","1.4","62.6","20.0","76.9"],
-    ["2021-22","Phoenix","NBA",58,"29.5","17.2","10.2","1.4","63.4","36.8","74.6"],
-    ["2022-23","Phoenix","NBA",67,"30.4","18.0","10.0","1.7","58.8","29.2","76.0"],
-    ["2023-24","Portland","NBA",55,"32.4","16.7","11.1","1.6","57.0","10.0","82.3"],
-    ["2024-25","Portland","NBA",40,"30.2","14.4","10.2","1.6","56.6","18.8","66.7"],
-    ["2025-26","LA Lakers","NBA",72,"27.2","12.5","8.0","0.8","67.1","0.0","64.5"],
-    ["2026-27","Washington","NBA",5,"13.8","6.2","4.4","0.6","78.9","0.0","50.0"]]},
-
-{g:"nba",n:"Zeke Nnaji",ua:"Arizona 2019–20 · 1 season",club:"Denver Nuggets · NBA",
- s:[["5.0","PTS"],["1.0","REB"],["0.0","AST"]],
- box:[["5.0","PTS"],["1.0","REB"],["0.0","AST"],["4.0","MIN"],["1","GP"],["100","FG%"],["100","3P%"],["100","FT%"]],
- note:"One appearance in four Denver games, four minutes long, in a twenty-point loss. No reason given for the other three.",
- avg:5.0,
- log:[["Oct 22","at OKC",0,null,null,null],["Oct 24","vs NO",0,null,null,null],["Oct 26","vs GS",4,5,1,0],["Oct 28","at NO",0,null,null,null]],
- c:[["2020-21","Denver","NBA",42,"9.5","3.2","1.5","0.2","48.1","40.7","80.0"],
-    ["2021-22","Denver","NBA",41,"17.0","6.6","3.6","0.4","51.6","46.3","63.1"],
-    ["2022-23","Denver","NBA",53,"13.7","5.2","2.6","0.3","56.1","26.2","64.5"],
-    ["2023-24","Denver","NBA",58,"9.9","3.2","2.2","0.6","46.3","26.1","67.7"],
-    ["2024-25","Denver","NBA",57,"10.7","3.2","1.6","0.4","49.6","32.7","61.4"],
-    ["2025-26","Denver","NBA",52,"12.0","3.7","2.6","0.6","47.0","25.9","77.3"],
-    ["2026-27","Denver","NBA",1,"4.0","5.0","1.0","0.0","100","100","100"]]},
-
-{g:"nba",n:"Josh Green",ua:"Arizona 2019–20 · 1 season",club:"Utah Jazz · NBA",
- s:[["2.7","PTS"],["2.0","REB"],["1.3","AST"]],
- box:[["2.7","PTS"],["2.0","REB"],["1.3","AST"],["17.3","MIN"],["3","GP"],["42.9","FG%"],["25.0","3P%"],["100","FT%"]],
- note:"Traded twice this offseason — Dallas to Minnesota in the LaMelo Ball deal, then on to Utah. Sat the first two games and has played sparingly since.",
- avg:2.7,
- log:[["Oct 21","at MEM",0,null,null,null],["Oct 23","vs NO",0,null,null,null],["Oct 24","vs LAL",3,0,0,1],["Oct 26","vs MEM",25,6,4,1],["Oct 28","vs SA",24,2,2,2]],
- c:[["2020-21","Dallas","NBA",39,"11.4","2.6","2.0","0.7","45.2","16.0","56.5"],
-    ["2020-21","SLC Stars","G League",6,"29.7","13.5","4.8","3.5","45.5","17.6","66.7"],
-    ["2021-22","Dallas","NBA",67,"15.5","4.8","2.4","1.2","50.8","35.9","68.9"],
-    ["2022-23","Dallas","NBA",60,"25.7","9.1","3.0","1.7","53.7","40.2","72.3"],
-    ["2023-24","Dallas","NBA",57,"26.4","8.2","3.2","2.3","47.9","38.5","68.4"],
-    ["2024-25","Charlotte","NBA",68,"27.8","7.4","2.5","1.6","42.8","39.1","68.1"],
-    ["2025-26","Charlotte","NBA",58,"15.7","4.3","1.8","0.8","45.9","42.0","89.3"],
-    ["2026-27","Utah","NBA",3,"17.3","2.7","2.0","1.3","42.9","25.0","100"]]},
-
-{g:"nba",n:"Koa Peat",ua:"Arizona 2025–26 · 1 season · No. 30 pick",club:"Phoenix Suns · NBA",
- s:[["2.0","PTS"],["0.5","REB"],["0.0","AST"]],
- box:[["2.0","PTS"],["0.5","REB"],["0.0","AST"],["5.0","MIN"],["2","GP"],["50.0","FG%"],["—","3P%"],["—","FT%"]],
- note:"Rookie. Drafted 30th by Dallas in 2026 and traded to Phoenix — home, more or less. The Suns have played three games, fewest of any team here.",
- avg:2.0,
- log:[["Oct 21","at POR",7,4,1,0],["Oct 24","vs GS",0,null,null,null],["Oct 26","at OKC",3,0,0,0]],
- c:[["2026-27","Phoenix","NBA",2,"5.0","2.0","0.5","0.0","50.0","0.0","—"]]},
-
-{g:"nba",n:"Carter Bryant",ua:"Arizona 2024–25 · 1 season · No. 14 pick",club:"San Antonio Spurs · NBA",
- s:[["1.6","PTS"],["0.4","REB"],["0.6","AST"]],
- box:[["1.6","PTS"],["0.4","REB"],["0.6","AST"],["8.6","MIN"],["5","GP"],["27.3","FG%"],["11.1","3P%"],["50.0","FT%"]],
- note:"Second year, and he has appeared in all five Spurs games. He is 1-for-9 from three so far — too few shots to read anything into. Last season: 71 games, 11.5 minutes, 4.2 points, 40.8% from the floor.",
- avg:1.6,
- log:[["Oct 20","vs OKC",6,0,0,1],["Oct 23","vs HOU",6,0,0,0],["Oct 24","at DAL",10,4,1,0],["Oct 27","vs SAC",17,1,1,2],["Oct 28","at UTA",5,3,0,0]],
- c:[["2025-26","San Antonio","NBA",71,"11.5","4.2","2.5","0.7","40.8","33.5","71.4"],
-    ["2025-26","Austin","G League",1,"29.0","15.0","5.0","0.0","50.0","0.0","100"],
-    ["2026-27","San Antonio","NBA",5,"8.6","1.6","0.4","0.6","27.3","11.1","50.0"]]},
-
-{g:"nba",n:"Jaden Bradley",ua:"Arizona 2023–26 · 3 seasons · Big 12 POY",club:"Toronto Raptors · NBA",
- s:[["1.5","PTS"],["0.5","REB"],["0.5","AST"]],
- box:[["1.5","PTS"],["0.5","REB"],["0.5","AST"],["3.8","MIN"],["4","GP"],["33.3","FG%"],["—","3P%"],["100","FT%"]],
- note:"Signed a two-way in July, converted to a standard multi-year deal in September. Dressing every game on garbage-time minutes.",
- avg:1.5,
- log:[["Oct 21","vs CHI",5,0,0,0],["Oct 23","at WSH",1,0,0,0],["Oct 25","at MIN",5,6,1,1],["Oct 28","vs ORL",5,0,1,1]],
- c:[["2026-27","Toronto","NBA",4,"3.8","1.5","0.5","0.5","33.3","0.0","100"]]},
-
-{g:"nba",quiet:1,n:"T.J. McConnell",flag:["t-unc","Out"],ua:"Arizona 2013–15 · 2 seasons",club:"Indiana Pacers · NBA",
- s:[["—","PTS"],["—","REB"],["—","AST"]],box:[],
- note:"Hamstring. Missed all five Pacers games and was practicing with Indiana's G League affiliate as of Oct. 30. Eleven straight NBA seasons before this one.",
- c:[["2015-16","Philadelphia","NBA",81,"19.8","6.1","3.1","4.5","47.0","34.8","63.4"],
-    ["2016-17","Philadelphia","NBA",81,"26.3","6.9","3.1","6.6","46.1","20.0","81.1"],
-    ["2017-18","Philadelphia","NBA",76,"22.4","6.3","3.0","4.0","49.9","43.5","79.5"],
-    ["2018-19","Philadelphia","NBA",76,"19.3","6.4","2.3","3.4","52.5","33.3","78.4"],
-    ["2019-20","Indiana","NBA",71,"18.7","6.5","2.7","5.0","51.6","29.4","83.3"],
-    ["2020-21","Indiana","NBA",69,"26.0","8.6","3.7","6.6","55.9","31.3","68.8"],
-    ["2021-22","Indiana","NBA",27,"24.1","8.5","3.3","4.9","48.1","30.3","82.6"],
-    ["2022-23","Indiana","NBA",75,"20.3","8.7","3.1","5.3","54.3","44.1","85.3"],
-    ["2023-24","Indiana","NBA",71,"18.2","10.2","2.7","5.5","55.6","40.9","79.0"],
-    ["2024-25","Indiana","NBA",79,"17.9","9.1","2.4","4.4","51.9","30.6","74.0"],
-    ["2025-26","Indiana","NBA",56,"17.2","9.4","2.2","5.1","53.8","32.0","86.2"]]},
-
-{g:"gl",n:"Tobe Awaka",flag:["t-tw","Two-way"],ua:"Arizona 2024–26 · 2 seasons",club:"Chicago Bulls · Windy City",
- s:[["3.0","PTS"],["6.5","REB"],["1.0","AST"]],
- box:[["3.0","PTS"],["6.5","REB"],["1.0","AST"],["13.0","MIN"],["2","GP"],["75.0","FG%"],["—","3P%"],["—","FT%"]],
- note:"Undrafted rookie. Both appearances came in thirty-point losses, and both produced six or seven rebounds in about thirteen minutes.",
- avg:3.0,
- log:[["Oct 21","at TOR",14,2,7,2],["Oct 23","at MIL",0,null,null,null],["Oct 24","vs WSH",0,null,null,null],["Oct 26","at BOS",12,4,6,0],["Oct 28","vs NY",0,null,null,null]],
- c:[["2026-27","Chicago","NBA",2,"13.0","3.0","6.5","1.0","75.0","0.0","—"]]},
-
-{g:"gl",n:"Caleb Love",flag:["t-tw","Two-way"],ua:"North Carolina, then Arizona 2023–25",club:"Philadelphia 76ers · Delaware",
- s:[["24.7","PTS"],["4.0","REB"],["4.6","AST"]],
- boxLabel:"2025–26 G League · his most recent real sample",
- box:[["24.7","PTS"],["4.0","REB"],["4.6","AST"],["34.3","MIN"],["10","GP"],["43.3","FG%"],["23.5","3P%"],["75.8","FT%"]],
- note:"No 2026-27 numbers worth showing — his one appearance this year was a one-minute cameo, so the line above is last season's G League work for Portland's affiliate.",
- c:[["2025-26","Portland","NBA",49,"20.7","10.4","2.3","2.5","38.8","31.8","73.5"],
-    ["2025-26","Rip City Remix","G League",10,"34.3","24.7","4.0","4.6","43.3","23.5","75.8"],
-    ["2026-27","Philadelphia","NBA",1,"1.0","0.0","0.0","0.0","—","—","—"]]},
-
-{g:"gl",n:"Keshad Johnson",flag:["t-tw","Two-way"],ua:"San Diego State, then Arizona 2023–24",club:"Miami Heat · Sioux Falls",
- s:[["17.4","PTS"],["8.6","REB"],["2.9","AST"]],
- boxLabel:"2025–26 G League · his most recent real sample",
- box:[["17.4","PTS"],["8.6","REB"],["2.9","AST"],["35.2","MIN"],["8","GP"],["51.5","FG%"],["47.1","3P%"],["62.5","FT%"]],
- note:"No NBA appearances yet this year, so the line above is last season's G League work for Sioux Falls. Won the 2026 dunk contest.",
- c:[["2024-25","Miami","NBA",16,"6.1","2.7","1.8","0.3","69.2","42.9","44.4"],
-    ["2024-25","Sioux Falls","G Lg · Showcase",13,"34.9","21.2","8.2","1.7","54.9","39.6","79.5"],
-    ["2024-25","Sioux Falls","G League",19,"35.3","15.1","8.3","2.9","48.9","24.2","59.6"],
-    ["2025-26","Miami","NBA",32,"8.8","4.3","1.9","0.3","49.0","29.5","72.4"],
-    ["2025-26","Sioux Falls","G League",8,"35.2","17.4","8.6","2.9","51.5","47.1","62.5"]]},
-
-{g:"gl",quiet:1,n:"Dalen Terry",flag:["t-unc","Unconfirmed"],ua:"Arizona 2020–22 · 2 seasons · No. 18 pick",club:"Santa Cruz Warriors · reported",
- s:[["—","PTS"],["—","REB"],["—","AST"]],box:[],
- note:"Waived by Golden State in October off an Exhibit 10. Reported to be joining Santa Cruz, not announced by the club.",
- c:[["2025-26","Chicago","NBA",34,"—","3.5","1.9","1.3","—","—","—"],
-    ["2025-26","Philadelphia","NBA","—","—","—","—","—","—","—","—"]]},
-
-{g:"gl",quiet:1,n:"Trey Townsend",flag:["t-unc","Unconfirmed"],ua:"Oakland, then Arizona 2024–25",club:"Greensboro Swarm · reported",
- s:[["—","PTS"],["—","REB"],["—","AST"]],box:[],
- note:"Cleared waivers Sept. 4 on an Exhibit 10 and no transaction since. Led the CEBL — Canada's 24-game professional league — in three-point shooting at 46.9% with Saskatoon.",
- c:[["2025-26","Texas Legends","G League",15,"—","3.2","2.1","0.7","48.6","41.2","—"],
-    ["2025-26","Salt Lake City","G League",9,"25.2","7.0","2.4","1.3","—","—","—"]]},
-
-{g:"intl",n:"Nico Mannion",flag:["t-hot","EuroCup leader"],ua:"Arizona 2019–20 · 1 season",club:"Virtus Roma · Italy",
- s:[["18.0","PTS"],["2.8","REB"],["5.9","AST"]],
- box:[["18.0","PTS"],["2.8","REB"],["5.9","AST"],["27.2","MIN"],["10","GP"],["49.6","FG%"],["33.3","3P%"],["95.2","FT%"]],
- note:"Led the EuroCup in efficiency rating as of Oct. 27, through four games. Opened that competition with 29 against Bahçeşehir, and had not missed a free throw in it — the attempt count isn't published, so no total here.",
- chartNote:"Both competitions in date order. His per-game rebound and assist columns don't reconcile with the published season averages, so trust the points line and treat the other two as approximate.",
- avg:18.0,
- log:[["Sep 26","Treviso · SA",28,11,3,7],["Sep 30","Bahçeşehir · EC",30,29,5,5],["Oct 4","Derthona · SA",24,19,6,9],["Oct 7","Lietkabelis · EC",26,21,4,4],["Oct 11","Serie A",29,24,2,10],["Oct 13","Botevgrad · EC",27,14,7,2],["Oct 17","Venezia · SA",26,18,3,3],["Oct 20","Manresa · EC",25,21,1,7],["Oct 24","Varese · SA",28,7,2,3],["Oct 27","Bosna · EC",26,16,3,4]],
- c:[["2020-21","Golden State","NBA",30,"12.1","4.1","1.5","2.3","34.2","36.7","82.1"],
-    ["2020-21","Santa Cruz","G League",9,"33.1","19.3","3.4","6.9","40.5","36.5","77.3"],
-    ["2021-22","Virtus Bologna","Italy",41,"13.6","5.5","1.8","3.0","38.5","37.4","70.3"],
-    ["2022-23","Virtus Bologna","Italy",48,"17.5","8.3","1.6","2.9","43.0","38.0","87.1"],
-    ["2023-24","Baskonia","ACB · Spain",8,"13.8","6.0","1.3","2.3","38.6","35.0","70.0"],
-    ["2023-24","Itelyum Varese","Italy",18,"30.2","20.3","3.5","6.6","41.4","37.1","91.2"],
-    ["2024-25","Olimpia Milano","Italy",59,"21.6","7.9","1.7","3.3","42.7","30.0","81.7"],
-    ["2025-26","Olimpia Milano","Italy",58,"13.5","5.6","1.0","2.3","42.9","36.8","86.4"],
-    ["2026-27","Virtus Roma","Serie A + EuroCup",10,"27.2","18.0","2.8","5.9","49.6","33.3","95.2"]]},
-
-{g:"intl",n:"Rawle Alkins",ua:"Arizona 2016–18 · 2 seasons",club:"Tokyo Sunrockers · Japan",
- s:[["18.1","PTS"],["6.8","REB"],["4.3","AST"]],
- box:[["18.1","PTS"],["6.8","REB"],["4.3","AST"],["29.4","MIN"],["12","GP"],["1.7","STL"],["—","FG%"],["—","3P%"]],
- note:"Quietly having one of the best seasons of any Wildcat anywhere. He signed with Kobe in 2025 but is at Tokyo now — most trackers still list the old club. No per-game log is published.",
- c:[["2018-19","Chicago","NBA",10,"12.0","3.7","2.6","1.3","—","—","—"],
-    ["2018-19","Windy City","G League",44,"—","11.3","5.5","2.9","—","—","—"],
-    ["2019-20","FC Porto","Portugal",2,"—","16.0","3.0","2.5","—","—","—"],
-    ["2020-21","Raptors 905","G League",3,"—","2.7","0.3","—","—","—","—"],
-    ["2021-22","Riesen Ludwigsburg","Germany","—","—","8.9","2.3","—","—","—","—"],
-    ["2022-26","Israel, Greece, Japan","various","—","—","—","—","—","—","—","—"],
-    ["2026-27","Tokyo Sunrockers","B.League",12,"29.4","18.1","6.8","4.3","—","—","—"]],
- gaprow:5},
-
-{g:"intl",n:"Cedric Henderson Jr.",ua:"Campbell, then Arizona 2022–23",club:"BC Šiauliai · Lithuania",
- s:[["11.6","PTS"],["3.8","REB"],["1.8","AST"]],
- box:[["11.6","PTS"],["3.8","REB"],["1.8","AST"],["24.7","MIN"],["5","GP"],["40.8","FG%"],["36.4","3P%"],["83.3","FT%"]],
- note:"Season averages above are the Lithuanian league. He is at 16.7 across three EuroCup games, which publish no per-game rows. Led the LKL in scoring last season and dropped 40 on Rytas in April.",
- avg:11.6,
- log:[["Sep 20","at Gargždai",33,12,3,3],["Sep 23","vs Lietkabelis",29,10,8,1],["Sep 27","at Žalgiris",24,15,4,2],["Oct 3","at Jonava",19,8,3,1],["Oct 25","at Neptūnas",19,13,1,2]],
- c:[["2026-27","Šiauliai","LKL · Lithuania",5,"24.7","11.6","3.8","1.8","40.8","36.4","83.3"],
-    ["2026-27","Šiauliai","EuroCup",3,"25.9","16.7","5.3","2.0","47.6","40.0","50.0"],
-    ["2024-26","PAOK, then Šiauliai","Greece / Lithuania","—","—","—","—","—","—","—","—"]],
- gaprow:2},
-
-{g:"intl",n:"Courtney Ramey",ua:"Texas, then Arizona 2022–23",club:"PGE Start Lublin · Poland",
- s:[["12.8","PTS"],["4.0","REB"],["4.3","AST"]],
- box:[["12.8","PTS"],["4.0","REB"],["4.3","AST"],["27.9","MIN"],["4","GP"],["48.5","FG%"],["30.8","3P%"],["83.3","FT%"]],
- note:"Shooting 48.5% over four games, against 29.8% in ten games at the same club last season. Four games is far too few to call that a change in form. No per-game log is published.",
- c:[["2023-24","Nevėžis","Lithuania",24,"23.5","10.9","2.1","2.1","42.7","38.5","78.4"],
-    ["2024-25","—","not on record","—","—","—","—","—","—","—","—"],
-    ["2025-26","Arka Gdynia","Poland",19,"26.3","10.2","4.3","5.6","38.1","34.4","71.1"],
-    ["2025-26","PGE Start Lublin","Poland",10,"32.5","6.3","4.4","4.2","29.8","15.8","70.0"],
-    ["2026-27","PGE Start Lublin","Poland",4,"27.9","12.8","4.0","4.3","48.5","30.8","83.3"]],
- gaprow:1},
-
-{g:"intl",n:"Anthony Dell'Orso",ua:"Campbell, then Arizona 2024–26 · 2 seasons",club:"Perth Wildcats · Australia",
- s:[["12.0","PTS"],["3.1","REB"],["2.3","AST"]],
- box:[["12.0","PTS"],["3.1","REB"],["2.3","AST"],["—","MIN"],["8","GP"],["50.0","FG%"],["37.5","3P%"],["83.3","FT%"]],
- note:"Went undrafted and signed a three-year NBL deal in August. Scoring in double figures right away. The NBL publishes no per-game rows here.",
- c:[["2026-27","Perth Wildcats","NBL · Australia",8,"—","12.0","3.1","2.3","50.0","37.5","83.3"]]},
-
-{g:"intl",n:"Ąžuolas Tubelis",ua:"Arizona 2020–23 · 3 seasons",club:"Žalgiris Kaunas · Lithuania",
- s:[["11.3","PTS"],["6.0","REB"],["1.6","AST"]],
- box:[["11.3","PTS"],["6.0","REB"],["1.6","AST"],["23.1","MIN"],["9","GP"],["—","FG%"],["—","3P%"],["0.7","STL"]],
- note:"Season averages above are EuroLeague, where he has nine games but no published per-game rows yet. Took facial contusions to the nose and chin around Oct. 18 — no fracture was reported — and was listed as expected to play against ASVEL on Oct. 23.",
- chartNote:"Lithuanian league games only — his nine EuroLeague games have no published per-game rows, so they are not in this chart.",
- avg:8.3,
- log:[["Sep 17","at Gargždai",14,6,2,1],["Sep 20","at Neptūnas",14,11,5,2],["Oct 18","vs Tauragė",9,8,2,0]],
- c:[["2019-20","Rytas Vilnius","LKL · Lithuania",7,"8.2","2.7","1.4","0.1","36.4","20.0","100"],
-    ["2020-23","Arizona","NCAA","—","—","—","—","—","—","—","—"],
-    ["2023-24","Neptūnas Klaipėda","LKL · Lithuania",25,"28.3","17.2","7.1","1.6","53.9","30.8","61.8"],
-    ["2024-25","Rytas Vilnius","LKL · Lithuania",51,"23.8","12.3","6.0","1.1","49.7","34.0","71.8"],
-    ["2025-26","Žalgiris Kaunas","LKL + EuroLeague",75,"21.5","12.5","4.6","1.1","61.0","37.4","77.9"],
-    ["2026-27","Žalgiris Kaunas","EuroLeague",9,"23.1","11.3","6.0","1.6","—","—","—"],
-    ["2026-27","Žalgiris Kaunas","LKL · Lithuania",3,"12.3","8.3","3.0","1.0","—","—","—"]],
- gaprow:1},
-
-{g:"intl",n:"Christian Koloko",ua:"Arizona 2019–22 · 3 seasons",club:"Crvena Zvezda · Serbia",
- s:[["9.0","PTS"],["2.5","REB"],["0.5","AST"]],
- box:[["9.0","PTS"],["2.5","REB"],["0.5","AST"],["15.0","MIN"],["2","GP"],["87.5","FG%"],["100","3P%"],["100","FT%"]],
- note:"Waived by New Orleans on Oct. 9 off a non-guaranteed deal, having played only a preseason game, and announced in Belgrade on Oct. 18. First EuroLeague stint after three NBA seasons — he missed 2023-24 entirely with blood clots. Two games so far, both comfortable wins; no dates are published for them.",
- avg:9.0,
- log:[["Game 1","vs Bayern",14,12,2,1],["Game 2","vs Maccabi",16,6,3,0]],
- c:[["2022-23","Toronto","NBA",58,"13.8","3.1","2.9","0.5","48.0","8.3","62.7"],
-    ["2023-24","—","did not play · illness","—","—","—","—","—","—","—","—"],
-    ["2024-25","LA Lakers","NBA",37,"9.2","2.4","2.5","0.4","60.6","0.0","71.4"],
-    ["2024-25","Coachella Valley","G League",12,"29.6","14.5","7.9","1.8","54.5","17.9","73.3"],
-    ["2025-26","Atlanta","NBA",14,"11.0","3.1","2.6","0.6","43.6","12.5","81.8"],
-    ["2025-26","Memphis","NBA",11,"17.7","2.6","4.0","0.9","40.0","0.0","25.0"],
-    ["2026-27","Crvena Zvezda","EuroLeague",2,"15.0","9.0","2.5","0.5","87.5","100","100"]],
- gaprow:1},
-
-{g:"intl",n:"Kaleb Tarczewski",ua:"Arizona 2012–16 · 4 seasons",club:"Napoli Basket · Italy",
- s:[["2.8","PTS"],["2.5","REB"],["0.8","AST"]],
- box:[["2.8","PTS"],["2.5","REB"],["0.8","AST"],["11.7","MIN"],["4","GP"],["—","FG%"],["—","3P%"],["75.0","FT%"]],
- note:"Back in Italy after four years in Japan, in a reduced bench role of about twelve minutes. Spent five seasons at Olimpia Milano from 2017 to 2022, playing Serie A and EuroLeague throughout.",
- c:[["2016-17","Oklahoma City Blue","G League",43,"25.5","10.0","7.3","0.6","62.8","—","72.7"],
-    ["2016-17","Olimpia Milano","Serie A · Italy",15,"14.7","6.7","5.1","0.5","58.3","—","66.7"],
-    ["2017-18","Olimpia Milano","Serie A + EuroLeague",60,"19.0","7.2","6.2","0.3","66.7","—","77.0"],
-    ["2018-19","Olimpia Milano","Serie A + EuroLeague",54,"20.3","8.4","5.7","0.6","74.6","—","63.6"],
-    ["2019-20","Olimpia Milano","Serie A + EuroLeague",49,"21.3","8.3","5.9","0.4","65.5","—","68.1"],
-    ["2020-21","Olimpia Milano","Serie A + EuroLeague",59,"14.8","4.8","3.8","0.4","56.6","—","65.2"],
-    ["2021-22","Olimpia Milano","Serie A + EuroLeague",59,"12.0","3.6","3.2","0.4","60.0","—","68.3"],
-    ["2022-23","Gunma Crane Thunders","B.League · Japan",58,"24.7","11.1","7.4","1.8","64.9","—","77.3"],
-    ["2023-24","Gunma Crane Thunders","B.League · Japan",49,"25.5","11.5","7.8","1.4","66.0","—","74.7"],
-    ["2024-25","Gunma Crane Thunders","B.League · Japan",62,"26.5","10.7","7.2","2.3","60.2","—","74.2"],
-    ["2025-26","Yokohama B-Corsairs","B.League · Japan",43,"26.2","9.0","8.5","1.7","62.7","—","78.3"],
-    ["2026-27","Napoli Basket","Serie A + EuroCup",4,"11.7","2.8","2.5","0.8","—","—","75.0"]]},
-
-{g:"intl",quiet:1,n:"Kobi Simmons",ua:"Arizona 2016–17 · 1 season",club:"Saski Baskonia · Spain",
- s:[["—","PTS"],["—","REB"],["—","AST"]],box:[],
- note:"Under contract through 2027-28, but no 2026-27 numbers are published anywhere reachable. Last season he went for 11.1 in EuroLeague and 12.6 in the Spanish league.",
- c:[["2017-18","Memphis","NBA",32,"20.1","6.1","1.6","2.1","42.3","28.2","100"],
-    ["2017-18","Memphis Hustle","G League",26,"30.9","15.1","2.7","3.9","43.7","36.1","76.6"],
-    ["2018-19","Cleveland Charge","G League",35,"32.4","17.1","3.8","3.6","43.2","27.1","89.7"],
-    ["2019-20","Greensboro Swarm","G League",37,"33.5","17.4","4.3","5.4","45.4","32.6","80.4"],
-    ["2020-21","Greensboro Swarm","G League",15,"32.9","18.3","5.1","6.1","40.9","37.8","71.2"],
-    ["2021-22","Stal Ostrów","PLK · Poland",27,"21.9","13.0","2.6","3.0","48.2","35.8","81.2"],
-    ["2022-23","Greensboro Swarm","G League",46,"33.7","19.2","4.3","4.5","48.9","38.0","81.0"],
-    ["2023-24","Raptors 905","G League",33,"32.1","15.2","4.2","5.6","43.3","34.5","79.5"],
-    ["2024-25","Gigantes de Carolina","BSN · Puerto Rico",36,"30.4","19.8","3.2","4.7","51.3","39.5","84.0"],
-    ["2024-25","Zhejiang Chouzhou","CBA · China",19,"25.1","15.4","3.5","5.1","42.6","33.7","86.4"],
-    ["2025-26","Baskonia","EuroLeague",31,"22.2","11.1","1.3","3.0","49.6","28.7","90.9"],
-    ["2025-26","Baskonia","ACB · Spain",29,"21.8","12.6","2.2","2.6","53.3","40.8","82.7"]]},
-
-{g:"intl",quiet:1,n:"Parker Jackson-Cartwright",flag:["t-unc","Out"],ua:"Arizona 2014–18 · 4 seasons",club:"NZ Breakers · New Zealand",
- s:[["—","PTS"],["—","REB"],["—","AST"]],box:[],
- note:"Ruled out Oct. 10 with a lower-leg injury after starting as an early MVP favourite. Bundesliga MVP in 2021-22 and All-NBL First Team in 2023-24.",
- c:[["2018-19","Westchester","G League","—","—","—","—","—","—","—","—"],
-    ["2019-20","Cheshire","BBL · Britain","—","—","20.2","—","7.4","—","—","—"],
-    ["2020-21","Saint-Quentin","Pro B · France","—","—","15.4","—","7.2","—","—","—"],
-    ["2021-22","Bonn","BBL · Germany","—","—","19.3","—","7.4","—","—","—"],
-    ["2022-23","ASVEL, Beşiktaş","France / Turkey","—","—","—","—","—","—","—","—"],
-    ["2023-24","NZ Breakers","NBL","—","—","20.6","—","5.8","—","—","—"],
-    ["2024-25","Breakers, Rytas","NBL / Lithuania","—","—","18.9","3.6","6.7","—","—","—"],
-    ["2025-26","Breakers, Nanjing","NBL / CBA","—","—","—","—","—","—","—","—"]]},
-
-{g:"intl",quiet:1,n:"Keanu Pinder",ua:"Arizona 2016–18 · 2 seasons",club:"Cairns Taipans · Australia",
- s:[["—","PTS"],["—","REB"],["—","AST"]],box:[],
- note:"Signed in June for a second stint at Cairns. No current-season numbers published. Averaged 16.9 and 9.3 there in 2022-23.",
- c:[["2018-19","Legia Warszawa","Poland","—","—","7.2","4.0","—","—","—","—"],
-    ["2019-20","Legia Warszawa","Poland","—","—","7.1","5.7","1.3","—","—","—"],
-    ["2020-21","Adelaide 36ers","NBL",35,"—","4.8","4.3","—","—","—","—"],
-    ["2021-22","Cairns Taipans","NBL",28,"—","10.9","7.6","—","—","—","—"],
-    ["2022-23","Cairns Taipans","NBL",19,"—","16.9","9.3","—","—","—","—"],
-    ["2023-24","Perth Wildcats","NBL","—","—","13.6","6.6","1.9","—","—","—"],
-    ["2025-26","Akita","B.League · Japan","—","—","—","—","—","—","—","—"]]},
-
-{g:"intl",quiet:1,n:"Stanley Johnson",flag:["t-unc","Unconfirmed"],ua:"Arizona 2014–15 · 1 season · No. 8 pick",club:"Nagasaki Velca · Japan",
- s:[["—","PTS"],["—","REB"],["—","AST"]],box:[],
- note:"Won the 2026 Japanese title there, but no source confirms he is still on the roster. 449 NBA games across eight seasons before heading overseas.",
- c:[["2015-16","Detroit","NBA",73,"23.1","8.1","4.2","1.6","37.5","30.7","78.4"],
-    ["2016-17","Detroit","NBA",77,"17.8","4.4","2.5","1.4","35.3","29.2","67.9"],
-    ["2017-18","Detroit","NBA",69,"27.4","8.7","3.7","1.6","37.5","28.6","77.2"],
-    ["2018-19","Detroit","NBA",48,"20.0","7.5","3.6","1.3","38.1","28.2","80.4"],
-    ["2018-19","New Orleans","NBA",18,"13.7","5.3","2.3","1.6","41.8","32.4","69.2"],
-    ["2019-20","Toronto","NBA",25,"6.0","2.4","1.5","0.8","37.3","29.2","56.3"],
-    ["2020-21","Toronto","NBA",61,"16.5","4.4","2.5","1.5","38.2","32.8","80.0"],
-    ["2021-22","LA Lakers","NBA",48,"22.8","6.7","3.2","1.7","46.6","31.4","71.6"],
-    ["2022-23","San Antonio","NBA",30,"15.6","5.8","3.2","2.2","53.3","45.0","66.7"],
-    ["2023-26","Stockton, Efes, Nagasaki","G Lg / Turkey / Japan","—","—","—","—","—","—","—","—"]],
- gaprow:9},
-
-{g:"intl",quiet:1,n:"Dušan Ristić",flag:["t-unc","Club unconfirmed"],ua:"Arizona 2014–18 · 4 seasons",club:"Club not verified · Japan",
- s:[["—","PTS"],["—","REB"],["—","AST"]],box:[],
- note:"Reported at Fukui, but sources conflict and no signing was announced. Last confirmed club was Kawasaki, where he averaged 13.0 and 8.2 over 60 games.",
- c:[["2013-14","Crvena Zvezda","ABA + EuroLeague",8,"6.0","1.9","1.1","0.0","50.0","0.0","75.0"],
-    ["2018-19","Crvena Zvezda","ABA + EuroCup",51,"11.1","5.2","3.5","0.3","56.1","25.0","75.0"],
-    ["2019-20","Astana Tigers","VTB · Kazakhstan",18,"32.7","15.7","10.9","1.9","56.9","26.3","65.9"],
-    ["2020-21","Avtodor, Brescia","VTB + Serie A",35,"19.6","11.2","5.8","0.7","58.4","23.1","73.2"],
-    ["2021-22","Fuenlabrada","ACB · Spain",34,"16.9","10.0","4.7","0.5","52.5","37.3","84.8"],
-    ["2022-23","Galatasaray, Fuenlabrada","BSL + ACB",38,"19.8","10.9","5.7","0.8","58.3","38.6","75.0"],
-    ["2023-24","Tenerife, Burgos","ACB + FEB",37,"16.0","8.8","4.9","0.8","52.1","37.7","65.2"],
-    ["2024-25","Chalon-sur-Saône","France",35,"23.8","12.2","6.2","1.1","55.9","46.4","59.7"],
-    ["2025-26","Kawasaki Brave Thunders","B.League · Japan",60,"23.7","13.0","8.2","1.7","53.6","39.2","70.6"]]},
-
-];
-
-var GROUPS = [
-  {k:"nba", t:"NBA", note:"Season is five games old. Averages are small-sample."},
-  {k:"gl",  t:"Two-way & G League", note:"The G League season tips off around Nov. 10, so no affiliate numbers exist yet. Figures shown for two-way players are last season's G League line."},
-  {k:"intl",t:"Overseas", note:"The biggest group, and the one nobody else tracks. European seasons began in late September."}
-];
-var HEAD = ["Season","Team","League","GP","MIN","PTS","REB","AST","FG%","3P%","FT%"];
-
-/* grouped by level, each group newest first — [player name, date label, fixture, line] */
-var RECENT = [
-  {t:"NBA", rows:[
-    ["Bennedict Mathurin","Oct 29","New Orleans vs Sacramento","19 min · 10 pts · 3 reb · 2 ast"],
-    ["Pelle Larsson","Oct 28","Miami at Atlanta","31 min · 17 pts · 6 reb · 8 ast"],
-    ["Aaron Gordon","Oct 28","Denver at New Orleans","31 min · 15 pts · 11 reb · 3 ast"],
-    ["Brandon Williams","Oct 28","Golden State at Minnesota","14 min · 11 pts · 3 reb · 1 ast"],
-    ["Brayden Burries","Oct 28","Milwaukee vs Houston","17 min · 10 pts · 6 reb · 1 ast"],
-    ["Deandre Ayton","Oct 28","Washington at Cleveland","12 min · 10 pts · 3 reb"],
-    ["Josh Green","Oct 28","Utah vs San Antonio","24 min · 2 pts · 2 reb · 2 ast"],
-    ["Carter Bryant","Oct 28","San Antonio at Utah","5 min · 3 pts"],
-    ["Jaden Bradley","Oct 28","Toronto vs Orlando","5 min · 1 reb · 1 ast · 2 stl"],
-    ["Lauri Markkanen","Oct 28","Utah vs San Antonio","did not play · wrist"],
-    ["Zeke Nnaji","Oct 26","Denver vs Golden State","4 min · 5 pts · 1 reb"],
-    ["Koa Peat","Oct 26","Phoenix at Oklahoma City","3 min · scoreless"]
-  ]},
-  {t:"Two-way", rows:[
-    ["Tobe Awaka","Oct 26","Chicago at Boston","12 min · 4 pts · 6 reb"],
-    ["Caleb Love","Oct 24","Philadelphia vs Milwaukee","1 min · scoreless"]
-  ]},
-  {t:"Overseas", rows:[
-    ["Nico Mannion","Oct 27","Roma vs Bosna · EuroCup","26 min · 16 pts · 3 reb · 4 ast"],
-    ["Cedric Henderson Jr.","Oct 25","Šiauliai at Neptūnas · LKL","19 min · 13 pts · 1 reb · 2 ast"]
-  ]}
-];
-function byName(n){
-  for(var i=0;i<P.length;i++){ if(P[i].n === n) return P[i]; }
-  return null;
-}
-
-function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
-
-/* log columns: 2 = min, 3 = pts, 4 = reb, 5 = ast */
-var STATS = [
-  {k:"pts", col:3, label:"PTS", title:"Points per game"},
-  {k:"reb", col:4, label:"REB", title:"Rebounds per game"},
-  {k:"ast", col:5, label:"AST", title:"Assists per game"},
-  {k:"min", col:2, label:"MIN", title:"Minutes per game"}
-];
-
-/* a row with no minutes and no box score is a game he didn't dress for */
-function isDNP(r){ return r[2] === 0 && r[3] === null; }
-
-function statAvg(p, col){
-  var vals = p.log.filter(function(r){ return !isDNP(r) && r[col] !== null; })
-                  .map(function(r){ return r[col]; });
-  if(!vals.length) return 0;
-  var sum = vals.reduce(function(a,b){ return a + b; }, 0);
-  return Math.round((sum / vals.length) * 10) / 10;
-}
-
-function chartInner(p, statKey){
-  var st = STATS.filter(function(s){ return s.k === statKey; })[0] || STATS[0];
-  var avg = statAvg(p, st.col);
-  var max = Math.max.apply(null, p.log.map(function(r){
-    return isDNP(r) || r[st.col] === null ? 0 : r[st.col];
-  }));
-  if(max <= 0) max = 1;
-  var H = 72, TOP = 92;
-  var avgTop = TOP - (avg / max) * H;
-  var bars = "", axis = "";
-  p.log.forEach(function(r){
-    var v = r[st.col];
-    if(isDNP(r) || v === null){
-      bars += '<div class="bar zero"><em>—</em><span></span></div>';
-    } else {
-      var h = Math.max(2, Math.round((v / max) * H));
-      var cls = v >= avg ? "bar hi" : "bar";
-      bars += '<div class="'+cls+'"><em>'+v+'</em><span style="height:'+h+'px"></span></div>';
-    }
-    axis += '<div>'+esc(r[0].replace(/^[A-Za-z]+ /,""))+'</div>';
-  });
-  return '<div class="chart">'+bars+'<div class="avgline" style="top:'+avgTop.toFixed(1)+'px"></div></div>'+
-    '<div class="xaxis">'+axis+'</div>'+
-    '<div class="legend"><b>— — </b>'+esc(st.title.toLowerCase())+', average '+avg+
-    ' &nbsp;·&nbsp; <em>green</em> at or above it &nbsp;·&nbsp; flat bar = did not play</div>';
-}
-
-function formChart(p, idx){
-  if(!p.log || !p.log.length) return "";
-  var btns = STATS.map(function(s){
-    var has = p.log.some(function(r){ return !isDNP(r) && r[s.col] !== null; });
-    if(!has) return "";
-    return '<button class="statbtn" type="button" data-pi="'+idx+'" data-stat="'+s.k+
-           '" aria-pressed="'+(s.k === "pts")+'">'+s.label+'</button>';
-  }).join("");
-  return '<div class="form" data-pi="'+idx+'">'+
-    '<div class="form-top"><div class="bl-h">Game by game &nbsp;·&nbsp; tap a stat to switch</div>'+
-    '<div class="statbtns" role="group" aria-label="Choose a stat to chart">'+btns+'</div></div>'+
-    (p.chartNote ? '<p class="chartnote">'+esc(p.chartNote)+'</p>' : '')+
-    '<div class="chartarea">'+chartInner(p, "pts")+'</div></div>';
-}
-
-function boxBlock(p){
-  if(!p.box || !p.box.length) return '';
-  var h = '<div class="boxline"><div class="bl-h">'+esc(p.boxLabel || "2026–27 season averages")+'</div><div class="bl-grid">';
-  p.box.forEach(function(b){ h += '<div><b>'+esc(b[0])+'</b><i>'+esc(b[1])+'</i></div>'; });
-  return h + '</div></div>';
-}
-
-function careerTable(p){
-  if(!p.c || !p.c.length) return '<p class="note">No professional career rows on record.</p>';
-  var cid = "cw" + (++uid);
-  var n = p.c.length;
-  var h = '<button class="careerbtn" type="button" aria-expanded="false" aria-controls="'+cid+'">'+
-          '<span class="cc">&#9654;</span>Career<span class="cn">'+n+(n===1?' row':' rows')+'</span></button>'+
-          '<div class="careerwrap" id="'+cid+'" hidden>';
-  h += '<div class="tscroll"><table><thead><tr>';
-  HEAD.forEach(function(x){ h += '<th>'+x+'</th>'; });
-  h += '</tr></thead><tbody>';
-  p.c.forEach(function(r,i){
-    var cls = [];
-    if(String(r[0]).indexOf("2026-27") === 0) cls.push("now");
-    if(p.gaprow === i) cls.push("gap");
-    h += '<tr'+(cls.length?' class="'+cls.join(" ")+'"':'')+'>';
-    r.forEach(function(c){ h += '<td>'+esc(c)+'</td>'; });
-    h += '</tr>';
-  });
-  return h + '</tbody></table></div></div>';
-}
-
-var uid = 0;
-function playerRow(p, opts){
-  opts = opts || {};
-  var id = "pb" + (++uid);
-  var h = '<div class="prow'+(p.quiet && !opts.board ? " quiet" : "")+'" data-lg="'+p.g+'" data-stats="'+(p.box && p.box.length ? 1 : 0)+'">';
-  h += '<button class="phead" aria-expanded="false" aria-controls="'+id+'">';
-  h += '<span class="caret">&#9654;</span><span class="pid">';
-  h += '<span class="pnm">'+esc(p.n);
-  if(p.flag && !opts.board) h += ' <span class="tag '+p.flag[0]+'">'+esc(p.flag[1])+'</span>';
-  h += '</span><span class="pclub">'+esc(opts.sub || p.club)+'</span></span>';
-  h += '<span class="pnums">';
-  (opts.nums || p.s).forEach(function(s){
-    h += '<span class="stat"><b>'+esc(s[0])+'</b><i>'+esc(s[1])+'</i></span>';
-  });
-  h += '</span></button>';
-  h += '<div class="pbody" id="'+id+'" hidden>';
-  h += boxBlock(p) + formChart(p, P.indexOf(p));
-  if(p.note){
-    h += '<div class="read"><div class="read-h"><span class="dot"></span>The read</div>'+
-         '<p>'+esc(p.note)+'</p>'+
-         '<div class="ualine">'+esc(p.ua)+'</div></div>';
-  } else {
-    h += '<p class="note" style="font-size:11.5px;color:var(--ink-3)">'+esc(p.ua)+'</p>';
-  }
-  h += careerTable(p) + '</div></div>';
-  return h;
-}
-
-/* recent board */
-(function(){
-  var out = "", total = 0;
-  RECENT.forEach(function(grp){
-    var block = "";
-    grp.rows.forEach(function(r){
-      var p = byName(r[0]);
-      if(!p) return;
-      var nums = [];
-      r[3].split(" · ").forEach(function(seg){
-        var m = seg.match(/^(\d+)\s(min|pts|reb|ast|stl)$/);
-        if(m) nums.push([m[1], m[2].toUpperCase()]);
-      });
-      if(!nums.length) nums = [["—","DNP"]];
-      block += playerRow(p, {board:1, sub: r[1] + " · " + r[2], nums: nums.slice(0,4)});
-      total++;
-    });
-    if(block){
-      out += '<div class="bdiv"><b>'+esc(grp.t)+'</b></div>' + block;
-    }
-  });
-  document.getElementById("boardbody").innerHTML = out ||
-    '<div class="board-empty">No Wildcat games in the last week.</div>';
-  document.getElementById("boardmeta").textContent = "OCT 24–29 · " + total + " GAMES";
-})();
-
-/* roster */
-(function(){
-  var out = "";
-  GROUPS.forEach(function(g){
-    var list = P.filter(function(p){ return p.g === g.k; });
-    out += '<section data-grp="'+g.k+'"><div class="sechead"><h2>'+g.t+'</h2>'+
-           '<span class="n">'+list.length+'</span></div>'+
-           '<p class="secnote">'+g.note+'</p>';
-    list.forEach(function(p){ out += playerRow(p); });
-    out += '</section>';
-  });
-  document.getElementById("board").innerHTML = out;
-})();
-
-/* expand / collapse, everywhere — delegated so it covers both the board and the roster */
-document.addEventListener("click", function(e){
-  var toggle = e.target.closest(".phead, .careerbtn");
-  if(toggle){
-    var open = toggle.getAttribute("aria-expanded") === "true";
-    toggle.setAttribute("aria-expanded", String(!open));
-    var target = document.getElementById(toggle.getAttribute("aria-controls"));
-    if(target) target.hidden = open;
-    return;
-  }
-  var sb = e.target.closest(".statbtn");
-  if(sb){
-    var form = sb.closest(".form");
-    var p = P[Number(sb.getAttribute("data-pi"))];
-    if(!form || !p) return;
-    Array.prototype.forEach.call(form.querySelectorAll(".statbtn"), function(o){
-      o.setAttribute("aria-pressed", String(o === sb));
-    });
-    form.querySelector(".chartarea").innerHTML = chartInner(p, sb.getAttribute("data-stat"));
-  }
-});
-
-/* filters apply to the roster only */
-function filter(f){
-  var rows = Array.prototype.slice.call(document.querySelectorAll("#board .prow"));
-  var shown = 0;
-  rows.forEach(function(r){
-    var ok = f === "all"
-      || (f === "playing" ? r.getAttribute("data-stats") === "1" : r.getAttribute("data-lg") === f);
-    r.hidden = !ok;
-    if(ok) shown++;
-  });
-  Array.prototype.forEach.call(document.querySelectorAll("section[data-grp]"), function(s){
-    s.hidden = !Array.prototype.slice.call(s.querySelectorAll(".prow")).some(function(r){ return !r.hidden; });
-  });
-  var L = {all:"All 31 players", nba:"NBA", gl:"two-way and G League", intl:"overseas", playing:"players with current-season numbers"};
-  document.getElementById("showing").textContent = f === "all" ? L.all : shown + " — " + L[f];
-}
-Array.prototype.forEach.call(document.querySelectorAll(".chip"), function(c){
-  c.addEventListener("click", function(){
-    Array.prototype.forEach.call(document.querySelectorAll(".chip"), function(o){
-      o.setAttribute("aria-pressed", String(o === c));
-    });
-    filter(c.getAttribute("data-f"));
-  });
-});
-</script>
 </body>
 </html>

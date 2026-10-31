@@ -1,0 +1,3 @@
+# keep old shared links working if anyone grabbed the root URL early
+/wildcat-watch  /arizona/basketball/  301
+/arizona  /arizona/basketball/  302
