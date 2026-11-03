@@ -17,11 +17,19 @@ const fs = require("fs");
 const file = process.argv[2] || "public/arizona/basketball/index.html";
 const html = fs.readFileSync(file, "utf8");
 
-// Pull the data array out of the page and evaluate just that part.
-const script = html.split("<script>")[1].split("</script>")[0];
-const dataOnly = script.split("var uid = 0;")[0];
-global.esc = (s) => String(s);
-eval(dataOnly);
+// The page carries its data as a baked JSON snapshot. That snapshot is what
+// ships, and what a viewer sees whenever Supabase is unreachable or staler
+// than the deploy — so it is the thing worth validating.
+const m = /<script id="baked" type="application\/json">([\s\S]*?)<\/script>/.exec(html);
+if (!m) {
+  console.log("No baked snapshot found in " + file + " — nothing to validate.");
+  process.exit(1);
+}
+const snap = JSON.parse(m[1].replace(/<\\\//g, "</"));
+const P = snap.players;
+const GROUPS = snap.groups;
+const RECENT = snap.recent;
+const STATS = snap.stats;
 
 const problems = [];
 const warnings = [];
