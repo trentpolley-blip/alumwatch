@@ -106,8 +106,10 @@ section { margin-bottom: 26px; }
 .pnm { font-weight: 600; font-size: 15px; color: #fff; letter-spacing: -.01em; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 /* display:block matters — ellipsis does not apply to an inline element */
 .pclub { display: block; font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); text-transform: uppercase; letter-spacing: .05em; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Fixed-width cells, not min-width: a row with fewer stats must leave the
+   empty columns empty rather than sliding the rest across. */
 .pnums { display: flex; gap: 14px; flex: none; }
-.stat { text-align: right; min-width: 32px; }
+.stat { text-align: right; width: 34px; flex: none; }
 .stat b { font-family: var(--mono); font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums; color: var(--ink); display: block; line-height: 1.1; }
 .stat i { font-style: normal; font-family: var(--mono); font-size: 8px; letter-spacing: .11em; color: var(--ink-3); display: block; margin-top: 2px; }
 .prow.quiet .pnm { color: var(--ink-2); }
@@ -235,7 +237,7 @@ footer li { margin-bottom: 4px; }
     gap: 22px;
     margin: 7px 0 0 23px;   /* clears the caret so it lines up with the name */
   }
-  .stat { text-align: left; min-width: 0; }
+  .stat { text-align: left; width: 40px; }   /* still fixed, so the columns line up down the page */
   .stat b { font-size: 14px; }
   .pclub { white-space: normal; overflow: visible; }
   .pbody { padding-left: 10px; }
@@ -519,7 +521,9 @@ function playerRow(p, opts){
   h += '</span><span class="pclub">'+esc(opts.sub || p.club)+'</span></span>';
   h += '<span class="pnums">';
   (opts.nums || p.s).forEach(function(s){
-    h += '<span class="stat"><b>'+esc(s[0])+'</b><i>'+esc(s[1])+'</i></span>';
+    h += s
+      ? '<span class="stat"><b>'+esc(s[0])+'</b><i>'+esc(s[1])+'</i></span>'
+      : '<span class="stat" aria-hidden="true"></span>';
   });
   h += '</span></button>';
   h += '<div class="pbody" id="'+id+'" hidden>';
@@ -544,12 +548,19 @@ function renderBoard(){
       var p = byName(r[0]);
       if(!p) return;
       var nums = [];
+      /* Always four slots in the same order, so MIN sits under MIN down the
+         whole board. A stat the line does not carry leaves its cell blank
+         instead of letting the others shift left. */
+      var found = {};
       r[3].split(" · ").forEach(function(seg){
         var m = seg.match(/^(\d+)\s(min|pts|reb|ast|stl)$/);
-        if(m) nums.push([m[1], m[2].toUpperCase()]);
+        if(m) found[m[2].toUpperCase()] = m[1];
       });
-      if(!nums.length) nums = [["—","DNP"]];
-      block += playerRow(p, {board:1, sub: r[1] + " · " + r[2], nums: nums.slice(0,4)});
+      nums = ["MIN","PTS","REB","AST"].map(function(k){
+        return found[k] !== undefined ? [found[k], k] : null;
+      });
+      if(!Object.keys(found).length) nums = [null, ["—","DNP"], null, null];
+      block += playerRow(p, {board:1, sub: r[1] + " · " + r[2], nums: nums});
       total++;
     });
     if(block){
