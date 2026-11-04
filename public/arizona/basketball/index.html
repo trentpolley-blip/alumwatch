@@ -327,6 +327,11 @@ var SUPABASE_KEY = "sb_publishable_xWgid1hMYEhFOoBNruZEnQ_SGAsD9Tp";
 
 var P, GROUPS, RECENT, HEAD, STATS;
 
+/* Initialised here, not further down, because paint() runs before the render
+   layer's own statements do. Left undefined, every ++uid yields NaN, every
+   panel gets the same id, and every row opens the first player's panel. */
+var uid = 0;
+
 function applySnapshot(snap, source) {
   P = snap.players; GROUPS = snap.groups; RECENT = snap.recent;
   HEAD = snap.head; STATS = snap.stats;
@@ -509,7 +514,6 @@ function careerTable(p){
   return h + '</tbody></table></div></div>';
 }
 
-var uid = 0;
 function playerRow(p, opts){
   opts = opts || {};
   var id = "pb" + (++uid);
