@@ -155,6 +155,15 @@ const flatBoard = [];
 (typeof RECENT !== "undefined" ? RECENT : []).forEach((grp) => {
   (grp.rows || []).forEach((r) => flatBoard.push(r));
 });
+// The board shows one row per player, his most recent game. A second row for
+// the same man reads as a duplicate rather than as history, and his full log
+// is already one tap away in his panel.
+const boardSeen = new Set();
+flatBoard.forEach((r) => {
+  if (boardSeen.has(r[0])) fail(r[0], `appears on the recent-games board more than once (${r[1]}) — the board carries one row per player`);
+  boardSeen.add(r[0]);
+});
+
 flatBoard.forEach((r) => {
   const p = P.find((x) => x.n === r[0]);
   if (!p) { fail(r[0], "appears on the recent-games board but is not in the roster"); return; }
